@@ -5,10 +5,23 @@ def_num = list()
 attackers = 0
 defenders = 0
 
-while (attackers <= 0) | (attackers > 3):
-    attackers = int(input("How many units attack: "))
-while (defenders <= 0) | (defenders > 2):
-    defenders = int(input("How many units defend: "))
+while True: 
+    try: 
+        while (attackers <= 0) | (attackers > 3):
+            attackers = int(input("How many units attack: "))
+    except ValueError:
+        print("Sorry, please give a number.")
+    else:
+        break
+
+while True: 
+    try: 
+        while (defenders <= 0) | (defenders > 2):
+            defenders = int(input("How many units defend: "))
+    except ValueError:
+        print("Sorry, please give a number.")
+    else:
+        break
 
 for x in range(0, attackers):
     att_num.insert(x, random.randrange(1,7))
@@ -21,21 +34,6 @@ text_nums = ' - '.join(str(e) for e in att_num)
 print(" Attacker: " + text_nums)
 text_nums = ' - '.join(str(e) for e in def_num)
 print(" Defender: " + text_nums)
-
-
-''' Old method, numbers without " - "
-print(" Attacker: ", end="")
-for x in range(0, attackers):
-    att_num.insert(x, random.randrange(1,7))
-    print(str(att_num[x]) + " ", end="")
-print("\n")
-
-print(" Defender: ", end="")
-for x in range(0, defenders):
-    def_num.insert(x, random.randrange(1,7))
-    print(str(def_num[x]) + " ",  end="")
-print("\n")
-'''
 
 att_num.sort(reverse=True)
 def_num.sort(reverse=True)
