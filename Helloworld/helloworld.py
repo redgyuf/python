@@ -13,5 +13,5 @@ def WelcomeUser(UserName):
         UserName = " World"
     print("Hello" + UserName + "!")
 
-#This is where the program runs, "WelcomeUser" function called.
+#This is where the program runs, "WelcomeUser" function called which gets the name from argument.
 WelcomeUser(GetArgumentsToString())
