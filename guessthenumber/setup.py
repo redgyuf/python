@@ -70,6 +70,7 @@ def checkGuess(random_num, input_num, numTries):
         return False
 
 def ask(question):
+    #This is where the ask options are handled
     os.system('clear')
     if question ==  'bigger':
         while True:
@@ -213,20 +214,21 @@ def checkPrime(randomNumber):
     else:
         return False
 
+#Declaring variables
 commandList = ["guess", "ask", "surrender", "highscore", "exit"]
 questionList = ["bigger", "smaller", "prime", "even", "odd", "divisible"]
 highscoreList = list()
 randomNumber = generateNewNumber()
 numTries = 0
 
+#Initialising starting screen
 os.system('clear')
-print(randomNumber)
 print("Welcome in the GuessTheNumber game, where You have to guess the generated number (0 < X < 100) to WIN")
 print("\n      ¯\(°_o)/¯\n")
 userName = input("Please enter your name: ") or "Unkown soldier"
 
-
-while True:
+#Main loop
+while True:    
     print("\nAvailable commands: ", end=" ")
     for i in commandList:
         print(i,end=" ")
@@ -244,7 +246,6 @@ while True:
             saveHighscore(highscoreList,userName,numTries)
             numTries = 0
             randomNumber = generateNewNumber()
-
 
     #Ask
     if (userInput == commandList[1]):
