@@ -127,7 +127,7 @@ def ask(question):
                     print("Yes, it is divisible, with your number")
                 else:
                     print("No, it isn't divisible with your number")
-                    break
+                break
             except ValueError:
                 print("Please enter a number!")
 
@@ -224,10 +224,12 @@ randomNumber = generateNewNumber()
 numTries = 0
 
 #Initialising starting screen
+
 os.system('clear')
 print("Welcome in the GuessTheNumber game, where You have to guess the generated number (0 <= X < 100) to WIN")
 print("\n      ¯\(°_o)/¯\n")
 userName = input("Please enter your name: ") or "Unkown soldier"
+print(randomNumber)
 
 #Main loop
 while True:    
