@@ -79,7 +79,7 @@ def ask(question):
                 if(checkBigger(usrBigger,randomNumber) == 1):
                     print("Yes, the number is bigger than this.")
                 elif (checkBigger(usrBigger,randomNumber)) == 2:
-                    print("¯\_(°‿°)_/¯")
+                    print("\n¯\_(°‿°)_/¯")
                 else:
                     print("No, the number is smaller than this.")
                 break
@@ -95,9 +95,10 @@ def ask(question):
                 if(checkSmaller(usrSmaller,randomNumber) == 1):
                     print("Yes, the number is smaller than this.")
                 elif (checkSmaller(usrSmaller,randomNumber)) == 2:
-                    print("¯\_(°‿°)_/¯")
+                    print("\n¯\_(°‿°)_/¯")
                 else:
                     print("No, the number is bigger than this.")
+                break
             except ValueError:
                 print("Please enter a number!")
 
@@ -196,8 +197,7 @@ def checkBigger(usrInput, randomNumber):
     elif usrInput == randomNumber:
         return 2
     else:
-        return False
-        
+        return False        
 
 def checkSmaller(usrInput, randomNumber):
     if usrInput > randomNumber:
@@ -234,7 +234,7 @@ while True:
         print(i,end=" ")
     print()
 
-    userInput = input("\nEnter a command: ")
+    userInput = (input("\nEnter a command: ")).lower()
     os.system('clear')
     
     #Guess
@@ -255,7 +255,7 @@ while True:
             print(i,end=" ")
         print()
 
-        userQuestion = input("\nEnter a question: ")
+        userQuestion = input("\nEnter a question: ").lower()
         ask(userQuestion) 
 
     #Surrender
