@@ -102,14 +102,19 @@ def remove_item_from_inventory(item_name):
 def clear_inventory():
     inv.clear()
 
+def ready_for_boss_kill():
+    if("Flask" in inv):
+        print("You have " + inv.get("Flask") + " flask")
+    else:
+        print("You have no flask, buy one! because You have low DPS!")
+    if("Potion" in inv):
+        print("You have " + inv.get("Potion") + " potion")
+    else:
+        print("You have no potion, buy one!")
+
 def is_inventory_heavy():
-    if(sum(inv.values() > 100):
+    if(sum(inv.values()) > 100):
         print("Your inventory is too heavy, You will be slower!")
         return True
     else:
         return False
-
-import_inventory()
-display_inventory()
-export_inventory()
-print_table("count,desc")
