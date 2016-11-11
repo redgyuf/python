@@ -1,17 +1,17 @@
 import csv
 import os
-#Step 1
+#Set starting inventory and dragon loot
 inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
+dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
 
+#Displays the base inventory if no inventory(dictionary) given, else it displays the inventory(dict) it gets
 def display_inventory(inventory=inv):
     print("Inventory:")    
     for key, value in inventory.items():
         print(value, key)
     print("Total number of items: " + str(sum(inventory.values())))
 
-#Step 2
-dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
-
+#Add items to a specific inventory(dictionary) from a list.
 def add_to_inventory(inventory, added_items):
     for item in added_items:
         if item in inv:
@@ -19,16 +19,13 @@ def add_to_inventory(inventory, added_items):
         else:
             inventory.update({item: 1})
 
-add_to_inventory(inv, dragon_loot)
-
-#Step 3
-#print line of "-", based on key+value lengths
+#print line of "-", based on lenght(integer)
 def print_line(lenght):
     for x in range(0, lenght+1):
         print("-", end="")
     print()
 
-#Set arg to null if no argument given
+#Prints the content of the inventory in a table format and order the table based on argument(default: unorder)
 def print_table(arg="null"):
     value_width = max([len(str(x)) for x in inv.values()])
     if value_width < 7:
@@ -55,28 +52,32 @@ def print_table(arg="null"):
         for key, value in inv_list:
             print("{:>{v_width}} {:>{k_width}}".format(value, key, v_width = value_width, k_width = key_width))
     else:
+        print("Print table failed!")
         print("Error: Wrong argument given to print_table() !!!")
     
     print_line(key_width+value_width)
     print("Total number of items: " + str(sum(inv.values())))
 
-#Step 4
-def import_inventory(filename="import_inventory.csv"):
-    if (os.path.isfile(filename)):
-        with open(filename) as csvfile:
-            imported_dict = csv.DictReader(csvfile)
-            for row in imported_dict:
-                if(row["item_name"] in inv):
-                    inv.update({row["item_name"]: (int(inv.get(row["item_name"])) + int(row["count"]))})
-                else:
-                    inv.update({row["item_name"]: int(row["count"])})
+#Imports an inventory from a .csv file, if the file not exists or its extension is not proper, Error message will appear to user
+def import_inventory(filename="import_inventory.cs"):
+    extension = os.path.splitext(filename)[1]
+    if(extension == ".csv"):
+        if (os.path.isfile(filename)):
+            with open(filename) as csvfile:
+                imported_dict = csv.DictReader(csvfile)
+                for row in imported_dict:
+                    if(row["item_name"] in inv):
+                        inv.update({row["item_name"]: (int(inv.get(row["item_name"])) + int(row["count"]))})
+                    else:
+                        inv.update({row["item_name"]: int(row["count"])})
+        else:
+            print("Inventory import failed!")
+            print("Error: The file You want to import is not exist !!!")
     else:
-        print("Error: The file You want to import is not exist !!!")
+        print("Inventory import failed!")
+        print("Error: The extension of the file You want to import is not proper (" + extension + "), please use .csv extension.")
 
-import_inventory()
-display_inventory()
-
-#Step 5
+#Export the inventory to a .csv file.
 def export_inventory(filename="export_inventory.csv"):
     with open(filename, 'w') as csvfile:
         fieldnames = ['item_name', 'count']
@@ -86,5 +87,7 @@ def export_inventory(filename="export_inventory.csv"):
         for key, value in inv.items():
            exported_dict.writerow({"item_name": key, "count": value}) 
 
+import_inventory()
+display_inventory()
 export_inventory()
 print_table("count,desc")
