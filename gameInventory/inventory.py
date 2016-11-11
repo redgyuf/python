@@ -1,7 +1,9 @@
+import csv
+import os
 #Step 1
 inv = {'rope': 1, 'torch': 6, 'gold coin': 42, 'dagger': 1, 'arrow': 12}
 
-def display_inventory(inventory):
+def display_inventory(inventory=inv):
     print("Inventory:")    
     for key, value in inventory.items():
         print(value, key)
@@ -63,4 +65,17 @@ def print_table(arg="null"):
 print_table("count,des")
 
 #Step 4
-def import_inventory(filename=import_inventory.csv):
+def import_inventory(filename="import_inventory.csv"):
+    if os.path.isfile(filename):
+        with open(filename) as csvfile:
+            imported_dict = csv.DictReader(csvfile)
+        for row in imported_dict:
+            if(row["item_name"] in inv):
+                inv.update({row["item_name"]: (int(inv.get(row["item_name"])) + int(row["count"]))})
+            else:
+                inv.update({row["item_name"]: int(row["count"])})
+    else:
+        print("Error: The file You want to import is not exist !!!")
+
+import_inventory("sads")
+display_inventory()
