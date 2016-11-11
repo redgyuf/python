@@ -9,8 +9,6 @@ def display_inventory(inventory=inv):
         print(value, key)
     print("Total number of items: " + str(sum(inventory.values())))
 
-#display_inventory(inv)
-
 #Step 2
 dragon_loot = ['gold coin', 'dagger', 'gold coin', 'gold coin', 'ruby']
 
@@ -22,9 +20,9 @@ def add_to_inventory(inventory, added_items):
             inventory.update({item: 1})
 
 add_to_inventory(inv, dragon_loot)
-#display_inventory(inv)
 
 #Step 3
+#print line of "-", based on key+value lengths
 def print_line(lenght):
     for x in range(0, lenght+1):
         print("-", end="")
@@ -58,24 +56,35 @@ def print_table(arg="null"):
             print("{:>{v_width}} {:>{k_width}}".format(value, key, v_width = value_width, k_width = key_width))
     else:
         print("Error: Wrong argument given to print_table() !!!")
-    #print " - " based on key+value lengths
+    
     print_line(key_width+value_width)
     print("Total number of items: " + str(sum(inv.values())))
 
-print_table("count,des")
-
 #Step 4
 def import_inventory(filename="import_inventory.csv"):
-    if os.path.isfile(filename):
+    if (os.path.isfile(filename)):
         with open(filename) as csvfile:
             imported_dict = csv.DictReader(csvfile)
-        for row in imported_dict:
-            if(row["item_name"] in inv):
-                inv.update({row["item_name"]: (int(inv.get(row["item_name"])) + int(row["count"]))})
-            else:
-                inv.update({row["item_name"]: int(row["count"])})
+            for row in imported_dict:
+                if(row["item_name"] in inv):
+                    inv.update({row["item_name"]: (int(inv.get(row["item_name"])) + int(row["count"]))})
+                else:
+                    inv.update({row["item_name"]: int(row["count"])})
     else:
         print("Error: The file You want to import is not exist !!!")
 
-import_inventory("sads")
+import_inventory()
 display_inventory()
+
+#Step 5
+def export_inventory(filename="export_inventory.csv"):
+    with open(filename, 'w') as csvfile:
+        fieldnames = ['item_name', 'count']
+        exported_dict = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        exported_dict.writeheader()
+        for key, value in inv.items():
+           exported_dict.writerow({"item_name": key, "count": value}) 
+
+export_inventory()
+print_table("count,desc")
