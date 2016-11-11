@@ -28,7 +28,8 @@ def print_line(lenght):
         print("-", end="")
     print()
 
-def print_table():
+#Set arg to null if no argument given
+def print_table(arg="null"):
     value_width = max([len(str(x)) for x in inv.values()])
     if value_width < 7:
         value_width = 7
@@ -37,15 +38,29 @@ def print_table():
         key_width = 13
 
     print("Inventory:")
-
-    print("{:>{v_width}} {:>{k_width}}".format("count", "item name", v_width = value_width, k_width = key_width))
-    #print " - " based on key+value lengths
+    print("{:>{v_width}} {:>{k_width}}".format("count", "item name", v_width = value_width, k_width = key_width))    
     print_line(key_width+value_width)
-    #print out dictionary content
-    for key, value in inv.items():
-        print("{:>{v_width}} {:>{k_width}}".format(value, key, v_width = value_width, k_width = key_width))
+    
+    if arg == "null":
+        for key, value in inv.items():
+            print("{:>{v_width}} {:>{k_width}}".format(value, key, v_width = value_width, k_width = key_width))
+
+    elif arg == "count,asc":
+        inv_list = sorted(inv.items(), key=lambda x:x[1])
+        for key, value in inv_list:
+            print("{:>{v_width}} {:>{k_width}}".format(value, key, v_width = value_width, k_width = key_width))
+
+    elif arg == "count,desc":
+        inv_list = sorted(inv.items(), key=lambda x:x[1], reverse=True)
+        for key, value in inv_list:
+            print("{:>{v_width}} {:>{k_width}}".format(value, key, v_width = value_width, k_width = key_width))
+    else:
+        print("Error: Wrong argument given to print_table() !!!")
     #print " - " based on key+value lengths
     print_line(key_width+value_width)
     print("Total number of items: " + str(sum(inv.values())))
 
-print_table()
+print_table("count,des")
+
+#Step 4
+def import_inventory(filename=import_inventory.csv):
