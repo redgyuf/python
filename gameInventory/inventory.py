@@ -18,6 +18,7 @@ def add_to_inventory(inventory, added_items):
             inventory[item] += 1
         else:
             inventory.update({item: 1})
+    is_inventory_heavy()
 
 #print line of "-", based on lenght(integer)
 def print_line(lenght):
@@ -59,7 +60,7 @@ def print_table(arg="null"):
     print("Total number of items: " + str(sum(inv.values())))
 
 #Imports an inventory from a .csv file, if the file not exists or its extension is not proper, Error message will appear to user
-def import_inventory(filename="import_inventory.cs"):
+def import_inventory(filename="import_inventory.csv"):
     extension = os.path.splitext(filename)[1]
     if(extension == ".csv"):
         if (os.path.isfile(filename)):
@@ -70,6 +71,8 @@ def import_inventory(filename="import_inventory.cs"):
                         inv.update({row["item_name"]: (int(inv.get(row["item_name"])) + int(row["count"]))})
                     else:
                         inv.update({row["item_name"]: int(row["count"])})
+            print("Inventory import successfully finished.")
+            is_inventory_heavy()
         else:
             print("Inventory import failed!")
             print("Error: The file You want to import is not exist !!!")
@@ -87,6 +90,24 @@ def export_inventory(filename="export_inventory.csv"):
         for key, value in inv.items():
            exported_dict.writerow({"item_name": key, "count": value})
         print("Inventory export successfully finished to " + filename)
+
+#Extra functions:
+def add_item_to_inventory(item_name,count):
+    inv.update({item_name: count})
+    is_inventory_heavy()
+
+def remove_item_from_inventory(item_name):
+    inv.pop(item_name)
+
+def clear_inventory():
+    inv.clear()
+
+def is_inventory_heavy():
+    if(sum(inv.values() > 100):
+        print("Your inventory is too heavy, You will be slower!")
+        return True
+    else:
+        return False
 
 import_inventory()
 display_inventory()
