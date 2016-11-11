@@ -85,7 +85,8 @@ def export_inventory(filename="export_inventory.csv"):
 
         exported_dict.writeheader()
         for key, value in inv.items():
-           exported_dict.writerow({"item_name": key, "count": value}) 
+           exported_dict.writerow({"item_name": key, "count": value})
+        print("Inventory export successfully finished to " + filename)
 
 import_inventory()
 display_inventory()
