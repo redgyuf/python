@@ -26,7 +26,7 @@ def print_line(lenght):
         print("-", end="")
     print()
 
-#Prints the content of the inventory in a table format and order the table based on argument(default: unorder)
+#Prints the content of the inventory in a table format and order the table based on argument(default: unordered)
 def print_table(arg="null"):
     value_width = max([len(str(x)) for x in inv.values()])
     if value_width < 7:
@@ -59,7 +59,8 @@ def print_table(arg="null"):
     print_line(key_width+value_width)
     print("Total number of items: " + str(sum(inv.values())))
 
-#Imports an inventory from a .csv file, if the file not exists or its extension is not proper, Error message will appear to user
+#Imports an inventory from a .csv file (default: "import_inventory.csv""), 
+#if the file not exists or its extension is not proper, Error message will appear to user,
 def import_inventory(filename="import_inventory.csv"):
     extension = os.path.splitext(filename)[1]
     if(extension == ".csv"):
@@ -80,7 +81,7 @@ def import_inventory(filename="import_inventory.csv"):
         print("Inventory import failed!")
         print("Error: The extension of the file You want to import is not proper (" + extension + "), please use .csv extension.")
 
-#Export the inventory to a .csv file.
+#Export the inventory to a .csv file (default: "export_inventory.csv").
 def export_inventory(filename="export_inventory.csv"):
     with open(filename, 'w') as csvfile:
         fieldnames = ['item_name', 'count']
@@ -92,26 +93,32 @@ def export_inventory(filename="export_inventory.csv"):
         print("Inventory export successfully finished to " + filename)
 
 #Extra functions:
+#Add one type of item to inventory (string,integer)
 def add_item_to_inventory(item_name,count):
     inv.update({item_name: count})
     is_inventory_heavy()
 
+#Remove one type of item. (string)
 def remove_item_from_inventory(item_name):
     inv.pop(item_name)
 
+#Remove all item from inventory.
 def clear_inventory():
     inv.clear()
 
+#Checks for flask and potion in inventory.
 def ready_for_boss_kill():
-    if("Flask" in inv):
-        print("You have " + inv.get("Flask") + " flask")
+    if("flask" in inv):
+        print("You have " + str(inv.get("flask")) + " flask")
     else:
         print("You have no flask, buy one! because You have low DPS!")
-    if("Potion" in inv):
-        print("You have " + inv.get("Potion") + " potion")
+    if("potion" in inv):
+        print("You have " + str(inv.get("potion")) + " potion")
     else:
         print("You have no potion, buy one!")
 
+#Check the amount of items in the inventory and Returns TRUE if its too heavy. 
+#(True,False for further development)
 def is_inventory_heavy():
     if(sum(inv.values()) > 100):
         print("Your inventory is too heavy, You will be slower!")
